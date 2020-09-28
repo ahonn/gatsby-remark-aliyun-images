@@ -36,7 +36,7 @@ module.exports = ({ markdownAST }, pluginOptions) => {
   visitWithParents(markdownAST, [`image`, `imageReference`], (node) => {
     const { host } = urlparse(node.url);
 
-    if (ignoreSuffixs.some((suffix) => node.url.endWiths(suffix))) {
+    if (ignoreSuffixs.some((suffix) => node.url.endsWith(suffix))) {
       return;
     }
 
