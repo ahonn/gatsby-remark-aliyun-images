@@ -30,11 +30,15 @@ function generateAliyunImageUrl(url, options) {
 module.exports = ({ markdownAST }, pluginOptions) => {
   const options = Object.assign({}, DEFAULT_OPTIONS, pluginOptions);
 
-  const { bucket } = options;
+  const { bucket, ignoreSuffixs } = options;
   const buckets = Array.isArray(bucket) ? bucket : [bucket];
 
   visitWithParents(markdownAST, [`image`, `imageReference`], (node) => {
     const { host } = urlparse(node.url);
+
+    if (ignoreSuffixs.some((suffix) => node.url.endWiths(suffix))) {
+      return;
+    }
 
     if (buckets.includes(host)) {
       const { url: originUrl, alt } = node;
